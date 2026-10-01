@@ -1,0 +1,66 @@
+@import "tailwindcss";
+
+@theme {
+  --font-display: 'Fraunces', serif;
+  --font-sans: 'Inter', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-border: var(--border);
+  --color-veil: var(--veil);
+}
+
+:root {
+  --background: oklch(10.6% 0.004 85);
+  --card: oklch(12.8% 0.004 85);
+  --card-foreground: oklch(92.8% 0.004 90);
+  --foreground: oklch(92.8% 0.004 90);
+  --muted: oklch(14.7% 0.004 85);
+  --muted-foreground: oklch(55.6% 0.004 85);
+  --primary: oklch(76.9% 0.188 70.08);
+  --primary-foreground: oklch(10.6% 0.004 85);
+  --accent: oklch(76.9% 0.188 70.08);
+  --accent-foreground: oklch(10.6% 0.004 85);
+  --border: oklch(18.5% 0.004 85);
+  --veil: oklch(92.8% 0.004 90 / 0.14);
+}
+
+@layer base {
+  body {
+    font-family: var(--font-sans);
+    background-color: var(--background);
+    color: var(--foreground);
+  }
+
+  .font-display {
+    font-family: var(--font-display);
+  }
+
+  .font-mono {
+    font-family: var(--font-mono);
+  }
+}
+
+/* Custom scrollbar for dark minimalism */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--background);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--muted-foreground);
+}
+
