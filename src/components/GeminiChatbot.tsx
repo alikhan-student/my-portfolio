@@ -78,18 +78,11 @@ export const GeminiChatbot: React.FC = () => {
     setLoading(true);
 
     try {
-      // Prepare conversation payload for server API
-      const conversationHistory = [...messages, userMsg].map((m) => ({
-        role: m.role,
-        content: m.content,
-      }));
-
       const res = await fetch('/api/chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          messages: conversationHistory,
-          model: selectedModel,
+          message: text.trim(),
         }),
       });
 
@@ -98,7 +91,7 @@ export const GeminiChatbot: React.FC = () => {
       }
 
       const data = await res.json();
-      const modelReply = data.reply || "I apologize, but I could not formulate a reply at this moment.";
+      const modelReply = data.text || data.reply || "I apologize, but I could not formulate a reply at this moment.";
 
       const aiMsg: ChatMessage = {
         id: (Date.now() + 1).toString(),
