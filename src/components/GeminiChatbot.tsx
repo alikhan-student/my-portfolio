@@ -56,10 +56,10 @@ export const GeminiChatbot: React.FC = () => {
   }, [isOpen, messages]);
 
   const promptSuggestions = [
+    "What is your educational background and journey to AI?",
     "Tell me about the Multiple Linear Regression project",
-    "How does the ad-spend saturation model work?",
     "What is Waqas's role at Core Computing Society?",
-    "How do I reach Waqas for an internship?"
+    "How do I reach Waqas for collaborations or internships?"
   ];
 
   const handleSendMessage = async (textToSend?: string) => {
