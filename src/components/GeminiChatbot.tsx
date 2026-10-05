@@ -15,6 +15,7 @@ import {
   Check,
   Copy
 } from 'lucide-react';
+import { DancingCat } from './DancingCat';
 import { PERSONAL_INFO } from '../data/portfolioData';
 
 interface ChatMessage {
@@ -134,21 +135,15 @@ export const GeminiChatbot: React.FC = () => {
 
   return (
     <>
-      {/* Floating Trigger Button */}
+      {/* Floating Dancing Cat Trigger at Edge */}
       {!isOpen && (
-        <button
-          onClick={() => setIsOpen(true)}
-          className="fixed bottom-6 right-6 z-40 group flex items-center gap-2.5 px-4 py-3 bg-[#0E1017] hover:bg-[#161824] border border-white/20 rounded-full shadow-2xl text-white transition-all active:scale-95"
-          aria-label="Open AI Portfolio Assistant"
-        >
-          <div className="relative">
-            <Bot className="w-5 h-5 text-emerald-400 group-hover:rotate-12 transition-transform" />
-            <span className="absolute -top-0.5 -right-0.5 w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-          </div>
-          <span className="font-display text-xs font-semibold tracking-wide">
-            Chat with Waqas AI
-          </span>
-        </button>
+        <div className="fixed bottom-3 right-5 sm:bottom-4 sm:right-7 z-40">
+          <DancingCat
+            size={68}
+            onClick={() => setIsOpen(true)}
+            showSpeechBubble={true}
+          />
+        </div>
       )}
 
       {/* Chat Window */}
@@ -163,15 +158,15 @@ export const GeminiChatbot: React.FC = () => {
           {/* Header */}
           <div className="px-4 py-3 bg-[#0D0F18] border-b border-white/[0.08] flex items-center justify-between shrink-0">
             <div className="flex items-center gap-2.5">
-              <div className="p-1.5 rounded-lg bg-zinc-800 border border-white/10 text-emerald-400">
-                <Bot className="w-4 h-4" />
+              <div className="p-1 rounded-lg bg-zinc-800 border border-white/10 overflow-hidden flex items-center justify-center">
+                <DancingCat size={28} showSpeechBubble={false} />
               </div>
               <div>
                 <div className="flex items-center gap-1.5">
                   <span className="font-display text-xs font-bold text-white tracking-tight">
                     Waqas AI Assistant
                   </span>
-                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
                 </div>
                 <div className="text-[10px] font-mono text-zinc-400">
                   UOP · Core Computing Society
