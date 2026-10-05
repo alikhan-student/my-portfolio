@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
-import { PERSONAL_INFO, EXPERTISE_LIST, SELECTED_WORKS, TIMELINE_MILESTONES, SelectedWork } from '../data/portfolioData';
+import { PERSONAL_INFO, EXPERTISE_LIST } from '../data/portfolioData';
 import { InteractivePredictorSandbox, SandboxTabType } from './InteractivePredictorSandbox';
+import { GithubProjectCardsSection } from './GithubProjectCardsSection';
 import { GeminiChatbot } from './GeminiChatbot';
-import { Sliders, Clock, ArrowRight, ExternalLink, X, Check, Copy } from 'lucide-react';
+import { Sliders, ArrowRight, ExternalLink, X, Check, Copy } from 'lucide-react';
 
 export const LovablePortfolio: React.FC = () => {
   const [activeSandbox, setActiveSandbox] = useState<SandboxTabType | null>(null);
-  const [showTimelineModal, setShowTimelineModal] = useState(false);
   const [copiedItem, setCopiedItem] = useState<string | null>(null);
 
   const copyToClipboard = (text: string, label: string) => {
@@ -20,14 +20,6 @@ export const LovablePortfolio: React.FC = () => {
       
       {/* Top Floating Controls Bar */}
       <div className="fixed top-6 right-6 z-40 flex items-center gap-3">
-        <button
-          onClick={() => setShowTimelineModal(true)}
-          className="px-3.5 py-1.5 text-xs font-medium text-muted-foreground hover:text-foreground bg-card/80 backdrop-blur-md border border-border rounded-full transition-colors flex items-center gap-1.5 shadow-sm"
-        >
-          <Clock className="w-3.5 h-3.5 text-accent" />
-          <span>Timeline View</span>
-        </button>
-
         <button
           onClick={() => setActiveSandbox('exam')}
           className="px-3.5 py-1.5 text-xs font-medium text-foreground bg-card/80 backdrop-blur-md border border-border hover:border-accent/40 rounded-full transition-colors flex items-center gap-1.5 shadow-sm"
@@ -108,72 +100,8 @@ export const LovablePortfolio: React.FC = () => {
           </div>
         </section>
 
-        {/* 03 Selected Works Section */}
-        <section className="reveal">
-          <div className="flex items-baseline gap-8 border-t border-border pt-8">
-            <span className="font-display text-sm italic text-muted-foreground">03</span>
-            <div className="flex-1">
-              <div className="flex items-center justify-between mb-8">
-                <h2 className="text-xs font-medium uppercase tracking-widest text-muted-foreground">
-                  Selected Works
-                </h2>
-                <span className="text-[11px] font-mono text-muted-foreground">
-                  6 Repositories
-                </span>
-              </div>
-
-              {/* Works List with Exact Divider */}
-              <div className="divide-y divide-border">
-                {SELECTED_WORKS.map((work) => (
-                  <div
-                    key={work.id}
-                    className="group flex flex-col sm:flex-row sm:items-center justify-between py-6 transition-colors hover:text-accent gap-2"
-                  >
-                    <div>
-                      <a
-                        href={work.githubUrl}
-                        target="_blank"
-                        rel="noreferrer noopener"
-                        className="inline-block"
-                      >
-                        <h3 className="mb-1 text-lg font-medium text-foreground group-hover:text-accent transition-colors">
-                          {work.title}
-                        </h3>
-                      </a>
-                      <p className="text-xs uppercase tracking-tight text-muted-foreground">
-                        {work.category}
-                        {work.metrics && <span className="normal-case tracking-normal text-muted-foreground/80 ml-2">· {work.metrics}</span>}
-                      </p>
-                    </div>
-
-                    <div className="flex items-center gap-4 self-end sm:self-auto pt-2 sm:pt-0">
-                      {work.interactiveType && (
-                        <button
-                          onClick={() => setActiveSandbox(work.interactiveType!)}
-                          className="px-2.5 py-1 text-[11px] font-mono text-muted-foreground hover:text-foreground bg-muted/60 hover:bg-muted rounded transition-colors"
-                        >
-                          Test Model
-                        </button>
-                      )}
-
-                      <a
-                        href={work.githubUrl}
-                        target="_blank"
-                        rel="noreferrer noopener"
-                        className="flex items-center gap-1.5 text-muted-foreground group-hover:text-accent transition-colors"
-                        title="Open Repository"
-                      >
-                        <span className="pr-2 font-display text-xl italic opacity-40 group-hover:opacity-100 transition-opacity">
-                          →
-                        </span>
-                      </a>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        </section>
+        {/* 03 Selected Works & GitHub Repositories (Project Cards) */}
+        <GithubProjectCardsSection onOpenSandbox={(type) => setActiveSandbox(type)} />
 
         {/* Contact Section (Exact match with lovable.app) */}
         <footer className="reveal">
@@ -270,67 +198,6 @@ export const LovablePortfolio: React.FC = () => {
         </footer>
 
       </main>
-
-      {/* Chronological Timeline Modal */}
-      {showTimelineModal && (
-        <div 
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/85 backdrop-blur-md p-4 sm:p-6 overflow-y-auto"
-          onClick={() => setShowTimelineModal(false)}
-        >
-          <div 
-            className="relative w-full max-w-2xl bg-card border border-border rounded-2xl p-6 sm:p-8 max-h-[85vh] overflow-y-auto shadow-2xl space-y-6"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <div className="flex items-center justify-between border-b border-border pb-4">
-              <div>
-                <span className="font-display text-xs italic text-accent">Chronology</span>
-                <h3 className="font-display text-2xl font-medium text-foreground">
-                  AI Development Progression
-                </h3>
-              </div>
-              <button
-                onClick={() => setShowTimelineModal(false)}
-                className="p-1.5 text-muted-foreground hover:text-foreground rounded-lg"
-              >
-                <X className="w-5 h-5" />
-              </button>
-            </div>
-
-            <div className="relative pl-6 border-l border-border space-y-8 my-4">
-              {TIMELINE_MILESTONES.map((m) => (
-                <div key={m.id} className="relative">
-                  <div className="absolute -left-[31px] top-1.5 size-3.5 rounded-full bg-background border-2 border-accent" />
-                  
-                  <div className="space-y-1">
-                    <div className="flex items-center gap-2 text-xs font-mono text-muted-foreground">
-                      <span className="font-bold text-foreground">{m.year}</span>
-                      <span>·</span>
-                      <span>{m.period}</span>
-                      <span>·</span>
-                      <span className="text-accent">{m.phaseTag}</span>
-                    </div>
-
-                    <h4 className="font-display text-lg font-medium text-foreground">
-                      {m.title}
-                    </h4>
-                    <p className="text-xs text-muted-foreground">
-                      {m.subtitle}
-                    </p>
-                    <p className="text-sm text-foreground/80 pt-1 leading-relaxed">
-                      {m.description}
-                    </p>
-
-                    <div className="pt-2 text-xs font-mono text-muted-foreground">
-                      <span className="text-muted-foreground/60">Core: </span>
-                      <span>{m.mathFocus}</span>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      )}
 
       {/* Live Interactive Predictor Modal */}
       {activeSandbox && (

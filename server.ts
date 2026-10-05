@@ -4,6 +4,7 @@ import dotenv from 'dotenv';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import chatHandler from './api/chat';
+import githubProjectsHandler from './api/github-projects';
 
 dotenv.config();
 
@@ -17,6 +18,8 @@ app.use(express.json());
 
 // Move Gemini call into api/chat.ts and route through handler
 app.all('/api/chat', (req, res) => chatHandler(req, res));
+// Dynamic GitHub repository auto-sync endpoint
+app.all('/api/github-projects', (req, res) => githubProjectsHandler(req, res));
 
 // Vite Middleware for Full-Stack development
 async function startServer() {

@@ -22,21 +22,6 @@ export interface Project {
   interactiveType: 'interview' | 'exam' | 'adspend' | 'instagram' | 'breast-cancer' | 'early-grade';
 }
 
-export interface TimelineMilestone {
-  id: string;
-  year: string;
-  period: string;
-  title: string;
-  subtitle: string;
-  phaseTag: string;
-  description: string;
-  mathFocus: string;
-  toolsUsed: string[];
-  projectId?: string;
-  metricsHighlight?: string;
-  isProject: boolean;
-}
-
 export interface SkillCategory {
   title: string;
   description: string;

@@ -2,7 +2,7 @@ import waqasPortraitExact from '../assets/images/waqas-portrait-exact.jpg';
 import examScoreImg from '../assets/images/exam_score_predictor_1790882563139.jpg';
 import interviewPredictorImg from '../assets/images/interview_predictor_1790882551264.jpg';
 import adSpendImg from '../assets/images/ad_spend_sales_predictor_1790882577872.jpg';
-import { Project, SkillCategory, LeadershipRole, TimelineMilestone } from '../types/portfolio';
+import { Project, SkillCategory, LeadershipRole } from '../types/portfolio';
 
 export const PERSONAL_INFO = {
   name: "Waqas Ali Khan",
@@ -219,6 +219,11 @@ export interface SelectedWork {
   interactiveType?: 'exam' | 'interview' | 'adspend' | 'instagram' | 'breast-cancer' | 'early-grade';
   metrics?: string;
   description?: string;
+  stars?: number;
+  forks?: number;
+  language?: string;
+  updatedAt?: string;
+  isNewFromGithub?: boolean;
 }
 
 export const SELECTED_WORKS: SelectedWork[] = [
@@ -275,86 +280,5 @@ export const SELECTED_WORKS: SelectedWork[] = [
     interactiveType: 'early-grade',
     metrics: "Fairness Audited · Dual Model",
     description: "Dual regression and classification pipeline with demographic parity checks for early identification of at-risk academic trajectories."
-  }
-];
-
-export const TIMELINE_MILESTONES: TimelineMilestone[] = [
-  {
-    id: "foundations-2023",
-    year: "2023",
-    period: "Early 2023",
-    title: "AI Inception & Mathematical Foundations",
-    subtitle: "University of Peshawar",
-    phaseTag: "Foundation",
-    description: "Commenced Artificial Intelligence undergraduate studies at University of Peshawar. Built foundational mastery in Python, linear algebra, vector calculus, and statistical hypothesis testing.",
-    mathFocus: "Matrix decomposition, vector spaces, gradient calculus",
-    toolsUsed: ["Python", "NumPy", "Pandas", "Matplotlib"],
-    isProject: false
-  },
-  {
-    id: "student-exam-marks-predictor",
-    year: "2023",
-    period: "Late 2023",
-    title: "Student Exam Marks Predictor",
-    subtitle: "Simple Linear Regression",
-    phaseTag: "First Regression Model",
-    description: "Modeled academic grade variance using Ordinary Least Squares (OLS) regression (R² = 0.915). Quantified +1.65 score lift per additional weekly study hour.",
-    mathFocus: "Ordinary Least Squares (OLS) closed-form minimization",
-    toolsUsed: ["Python", "Scikit-Learn", "Scipy"],
-    projectId: "student-exam-marks-predictor",
-    metricsHighlight: "R² = 0.915 · MAE = 2.84 pts",
-    isProject: true
-  },
-  {
-    id: "interview-selection-predictor",
-    year: "2024",
-    period: "Mid 2024",
-    title: "Interview Selection Predictor",
-    subtitle: "Multiple Linear Regression",
-    phaseTag: "Multivariate Modeling",
-    description: "Engineered multivariate hiring model with variance inflation factor (VIF) collinearity checks and Sigmoid mapping. Technical test score was strongest predictor (beta = 0.48).",
-    mathFocus: "Multivariate normal equations, Sigmoid logit mapping",
-    toolsUsed: ["Python", "Scikit-Learn", "Pandas"],
-    projectId: "interview-selection-predictor",
-    metricsHighlight: "R² = 0.892 · MAE = 4.12%",
-    isProject: true
-  },
-  {
-    id: "ad-spend-sales-predictor",
-    year: "2024",
-    period: "Late 2024",
-    title: "Ad-Spend Sales Predictor",
-    subtitle: "Linear Regression · KNN",
-    phaseTag: "Econometric ML",
-    description: "Modeled diminishing marginal return curves across search, social, and display advertising spend using logarithmic saturation functions.",
-    mathFocus: "Logarithmic saturation elasticity, KNN distance weighting",
-    toolsUsed: ["Python", "NumPy", "Scikit-Learn"],
-    projectId: "ad-spend-sales-predictor",
-    metricsHighlight: "R² = 0.934 · F = 182.4",
-    isProject: true
-  },
-  {
-    id: "advanced-models-2025",
-    year: "2025",
-    period: "Early 2025",
-    title: "Diagnostics & Engagement ML Pipelines",
-    subtitle: "Breast Cancer KNN & Instagram Reel Model",
-    phaseTag: "Supervised Classification",
-    description: "Built high-sensitivity clinical classification with K-Nearest Neighbors (96.5% accuracy) and designed end-to-end social media engagement prediction pipelines.",
-    mathFocus: "Euclidean / Manhattan distance metrics, confusion matrices",
-    toolsUsed: ["Python", "Scikit-Learn", "Feature Pipelines"],
-    isProject: false
-  },
-  {
-    id: "leadership-rag-2025",
-    year: "2025-2026",
-    period: "Present",
-    title: "AI Club Leadership & RAG Architectures",
-    subtitle: "Core Computing Society (CCS)",
-    phaseTag: "Leadership & RAG",
-    description: "Serving as AI Club Lead at Core Computing Society, running workshops and peer study circles. Actively building Retrieval-Augmented Generation (RAG) and AI automation systems.",
-    mathFocus: "High-dimensional vector embeddings, cosine distance, contextual reranking",
-    toolsUsed: ["RAG", "Vector DBs", "LLM APIs", "Python Automation"],
-    isProject: false
   }
 ];
