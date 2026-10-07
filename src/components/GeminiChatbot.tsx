@@ -104,10 +104,13 @@ export const GeminiChatbot: React.FC = () => {
       setMessages((prev) => [...prev, aiMsg]);
     } catch (err: any) {
       console.error('Chat request error:', err);
+      const isBad = /\b(fuck|shit|bitch|bastard|asshole|dick|pussy|porn|nude|sex|idiot|stupid)\b/i.test(text);
       const fallbackMsg: ChatMessage = {
         id: (Date.now() + 1).toString(),
         role: 'model',
-        content: `I'm having a brief connection delay. Waqas Ali Khan is an AI undergraduate at University of Peshawar and AI Club Lead at Core Computing Society. You can reach him directly at ${PERSONAL_INFO.email} or call ${PERSONAL_INFO.phoneFormatted}!`,
+        content: isBad
+          ? "I am not here for this. Please ask questions related to Waqas Ali Khan's portfolio, AI projects, or academic background."
+          : `I'm having a brief connection delay. Waqas Ali Khan is an AI undergraduate at University of Peshawar and AI Club Lead at Core Computing Society. You can reach him directly at ${PERSONAL_INFO.email} or call ${PERSONAL_INFO.phoneFormatted}!`,
         timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
       };
       setMessages((prev) => [...prev, fallbackMsg]);

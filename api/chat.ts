@@ -1,5 +1,24 @@
 import { GoogleGenAI } from "@google/genai";
 
+const INAPPROPRIATE_REPLY = "I am not here for this. Please ask questions related to Waqas Ali Khan's portfolio, AI projects, or academic background.";
+
+// Fast pre-filter for abusive, vulgar, NSFW, or disrespectful inputs
+function isInappropriateMessage(text: string): boolean {
+  if (!text) return false;
+  const lower = text.toLowerCase().trim();
+
+  const patterns = [
+    /\b(fuck|fucking|fucker|shit|bitch|bastard|asshole|dick|pussy|cunt|slut|whore|nigger|nigga|faggot|retard)\b/i,
+    /\b(porn|pornography|nude|nudes|naked|sex|sexy|hentai|erotic|boobs|penis|vagina|horny)\b/i,
+    /\b(kill yourself|kys|suicide|murder|terrorist|terrorism|bomb|shoot up)\b/i,
+    /\b(idiot|stupid|moron|dumbass|ugly|loser)\b/i,
+    /\b(drugs|cocaine|heroin|meth|marijuana)\b/i,
+    /\b(scam|hack|hacked|ddos|exploit|malware)\b/i,
+  ];
+
+  return patterns.some((pattern) => pattern.test(lower));
+}
+
 export default async function handler(req: any, res: any) {
   try {
     const ai = new GoogleGenAI({
@@ -25,6 +44,14 @@ export default async function handler(req: any, res: any) {
       });
     }
 
+    // Direct guardrail check for clearly inappropriate, offensive, or abusive content
+    if (isInappropriateMessage(userMessage)) {
+      return res.status(200).json({
+        text: INAPPROPRIATE_REPLY,
+        reply: INAPPROPRIATE_REPLY,
+      });
+    }
+
     const systemInstruction = `You are the AI representative for Waqas Ali Khan.
 
 STRICT RULE & CORE BEHAVIOR:
@@ -32,6 +59,12 @@ STRICT RULE & CORE BEHAVIOR:
 - NOT LESS, NOT MORE.
 - Absolutely NO conversational filler, NO pleasantries, NO intros, and NO outros (e.g., NEVER say "Hello!", "I'd be glad to help", "That's a great question", "Feel free to ask if you need anything else").
 - State the direct answer immediately in the simplest, most accurate, and concise words possible.
+
+INAPPROPRIATE OR OFFENSIVE QUESTIONS POLICY:
+- If someone asks anything inappropriate, rude, offensive, vulgar, abusive, sexually explicit/NSFW, disrespectful, unethical, or harmful:
+  You MUST respond strictly and exclusively with:
+  "${INAPPROPRIATE_REPLY}"
+- Never entertain, answer, or prolong inappropriate queries.
 
 FACTUAL DATABASE OF WAQAS ALI KHAN:
 - Full Name: Waqas Ali Khan
@@ -66,10 +99,14 @@ EXAMPLE TO-THE-POINT RESPONSES:
 - "mdcat score?" -> "155 marks in MDCAT 2025."
 - "what does he study and where?" -> "He studies Artificial Intelligence at the University of Peshawar (UOP)."
 - "what is his email?" -> "alikhan520451waqas@gmail.com."
-- "phone number?" -> "03299037442 (+92 329 9037442)."`;
+- "phone number?" -> "03299037442 (+92 329 9037442)."
+- Any inappropriate or offensive request -> "${INAPPROPRIATE_REPLY}"`;
 
     const getContextualFallback = (msg: string): string => {
       const lower = msg.toLowerCase();
+      if (isInappropriateMessage(msg)) {
+        return INAPPROPRIATE_REPLY;
+      }
       if (lower.includes('father') || lower.includes('parent') || lower.includes('family') || lower.includes('nazir')) {
         return "Waqas Ali Khan's father is Nazir Muhammad.";
       }
